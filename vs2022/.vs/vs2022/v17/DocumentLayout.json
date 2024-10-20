@@ -3,7 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\vs2022\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{15E0B81C-AD7E-408A-B25B-0FA98810D941}|WebGpu\\WebGpu.vcxproj|C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\vs2022\\WebGpu\\src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebGpu\\src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\vs2022\\WebGpu\\src\\Header\\Application.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebGpu\\src\\Header\\Application.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\vs2022\\WebGpu\\src\\Application.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebGpu\\src\\Application.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +28,38 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "main.cpp",
-              "DocumentMoniker": "C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\src\\main.cpp",
-              "RelativeDocumentMoniker": "..\\src\\main.cpp",
-              "ToolTip": "C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\src\\main.cpp",
-              "RelativeToolTip": "..\\src\\main.cpp",
-              "ViewState": "AgIAAMsAAAAAAAAAAAAAAAEAAAAXAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\vs2022\\WebGpu\\src\\main.cpp",
+              "RelativeDocumentMoniker": "WebGpu\\src\\main.cpp",
+              "ToolTip": "C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\vs2022\\WebGpu\\src\\main.cpp",
+              "RelativeToolTip": "WebGpu\\src\\main.cpp",
+              "ViewState": "AgIAAMcAAAAAAAAAAAAAANwAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-10-16T22:20:44.886Z",
+              "WhenOpened": "2024-10-19T17:08:43.503Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Application.h",
+              "DocumentMoniker": "C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\vs2022\\WebGpu\\src\\Header\\Application.h",
+              "RelativeDocumentMoniker": "WebGpu\\src\\Header\\Application.h",
+              "ToolTip": "C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\vs2022\\WebGpu\\src\\Header\\Application.h",
+              "RelativeToolTip": "WebGpu\\src\\Header\\Application.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-10-19T16:59:57.226Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Application.cpp",
+              "DocumentMoniker": "C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\vs2022\\WebGpu\\src\\Application.cpp",
+              "RelativeDocumentMoniker": "WebGpu\\src\\Application.cpp",
+              "ToolTip": "C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\vs2022\\WebGpu\\src\\Application.cpp",
+              "RelativeToolTip": "WebGpu\\src\\Application.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-19T17:01:11.553Z"
             }
           ]
         }

@@ -1,10 +1,10 @@
 add_rules("mode.debug", "mode.release")
-add_requires("glfw","wgpu-native")
+add_requires("glfw","wgpu-native","glfw3webgpu")
 
 target("WebGpu")
     set_kind("binary")
     add_files("src/*.cpp","glfw/*.cpp")
-    add_packages("glfw","wgpu-native" )
+    add_packages("glfw","wgpu-native","glfw3webgpu" )
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
