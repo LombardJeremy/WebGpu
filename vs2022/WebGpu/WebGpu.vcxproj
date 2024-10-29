@@ -114,8 +114,11 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp">
     </ClCompile>
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Header\Application.h" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

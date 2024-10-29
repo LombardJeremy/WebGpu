@@ -196,6 +196,31 @@ void onQueueWorkDone(WGPUQueueWorkDoneStatus status, void* /*pUserData*/) {
     std::cout << "Queued work finished with status: " << status << std::endl;
 }
 
+WGPUTextureView Application::GetNextSurfaceTextureView() {
+    WGPUSurfaceTexture surfaceTexture;
+    wgpuSurfaceGetCurrentTexture(surface, &surfaceTexture);
+    if (surfaceTexture.status != WGPUSurfaceGetCurrentTextureStatus_Success) {
+        return nullptr;
+    }
+    WGPUTextureViewDescriptor viewDescriptor;
+    viewDescriptor.nextInChain = nullptr;
+    viewDescriptor.label = "Surface texture view";
+    viewDescriptor.format = wgpuTextureGetFormat(surfaceTexture.texture);
+    viewDescriptor.dimension = WGPUTextureViewDimension_2D;
+    viewDescriptor.baseMipLevel = 0;
+    viewDescriptor.mipLevelCount = 1;
+    viewDescriptor.baseArrayLayer = 0;
+    viewDescriptor.arrayLayerCount = 1;
+    viewDescriptor.aspect = WGPUTextureAspect_All;
+    WGPUTextureView targetView = wgpuTextureCreateView(surfaceTexture.texture, &viewDescriptor);
+#ifndef WEBGPU_BACKEND_WGPU
+    // We no longer need the texture, only its view
+    // (NB: with wgpu-native, surface textures must not be manually released)
+    wgpuTextureRelease(surfaceTexture.texture);
+#endif // WEBGPU_BACKEND_WGPU
+    return targetView;
+}
+
 int main(int argc, char** argv) {
 
     // We create a descriptor
@@ -218,7 +243,7 @@ int main(int argc, char** argv) {
     std::cout << "Requesting adapter..." << std::endl;
 
 
-    //Get surface
+    //Surface Configuration
     WGPUSurface surface;
     surface = glfwGetWGPUSurface(instance, window);
 
@@ -320,19 +345,79 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    //Surface Configuration
+    WGPUSurfaceConfiguration config = {};
+    config.nexInChain = nullptr;
 
+    config.width = 640;
+    config.height = 480;
+
+    config.usage = WGPUTextureUsage_RenderAttachment;
+
+    WGPUTextureFormat surfaceFormat = wgpuSurfaceGetPreferredFormat(surface, adapter);
+    config.format = surfaceFormat;
+    // And we do not need any particular view format:
+    config.viewFormatCount = 0;
+    config.viewFormats = nullptr;
+
+    config.device = device;
+    config.presentMode = WGPUPresentMode_Fifo;
+    config.alphaMode = WGPUCompositeAlphaMode_Auto;
+
+    wgpuSurfaceConfigure(surface, &config);
+
+
+    wgpuAdapterRelease(adapter);
+    //Main LOOP
     while (!glfwWindowShouldClose(window)) {
         // Check whether the user clicked on the close button (and any other
         // mouse/key event, which we don't use so far)
         glfwPollEvents();
+        //MAINS LOOP CONTENT    
+        // Get the next target texture view
+        WGPUTextureView targetView = GetNextSurfaceTextureView();
+        if (!targetView) return;
+
+
+        //Render Pass ?
+        WGPURenderPassDescriptor renderPassDesc = {};
+        renderPassDesc.nextInChain = nullptr;
+
+        //Describe Render Pass
+        WGPURenderPassColorAttachment renderPassColorAttachment = {};
+
+        //Describe the atachment
+        renderPassColorAttachment.view = targetView;
+        renderPassColorAttachment.resolveTarget = nullptr;
+        renderPassColorAttachment.loadOp = WGPULoadOp_Clear;
+        renderPassColorAttachment.storeOp = WGPUStoreOp_Store;
+        renderPassColorAttachment.clearValue = WGPUColor{ 0.9, 0.1, 0.2, 1.0 };
+#ifndef WEBGPU_BACKEND_WGPU
+        renderPassColorAttachment.depthSlice = WGPU_DEPTH_SLICE_UNDEFINED;
+#endif // NOT WEBGPU_BACKEND_WGPU
+        renderPassDesc.depthStencilAttachment = nullptr;
+
+
+        renderPassDesc.colorAttachmentCount = 1;
+        renderPassDesc.colorAttachments = &renderPassColorAttachment;
+
+        WGPURenderPassEncoder renderPass = wgpuCommandEncoderBeginRenderPass(encoder, &renderPassDesc);
+        // Use Render Pass
+        wgpuRenderPassEncoderEnd(renderPass);
+        wgpuRenderPassEncoderRelease(renderPass);
+
+
+        // At the end of the frame
+        wgpuTextureViewRelease(targetView);
+        wgpuSurfacePresent(surface);
     }
 
 
     glfwDestroyWindow(window);
     glfwTerminate();
 
+    wgpuSurfaceUnconfigure(surface);
     wgpuSurfaceRelease(surface);
-    wgpuAdapterRelease(adapter);
     wgpuDeviceRelease(device);
     wgpuQueueRelease(queue);
     return 0;
