@@ -45,14 +45,10 @@ int Application::launch() {
 
     inspectAdapter(adapter);
 
-
-
-
     std::cout << "Requesting device..." << std::endl;
 
     WGPUDeviceDescriptor deviceDesc = {};
     // [...] Build device descriptor
-    device = requestDeviceSync(adapter, &deviceDesc);
 
     std::cout << "Got device: " << device << std::endl;
 
@@ -74,7 +70,9 @@ int Application::launch() {
         if (message) std::cout << " (" << message << ")";
         std::cout << std::endl;
         };
+    device = requestDeviceSync(adapter, &deviceDesc);
     wgpuDeviceSetUncapturedErrorCallback(device, onDeviceError, nullptr /* pUserData */);
+
 
 
     WGPUQueue queue = wgpuDeviceGetQueue(device);

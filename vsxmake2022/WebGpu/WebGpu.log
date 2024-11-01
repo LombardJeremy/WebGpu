@@ -1,0 +1,1 @@
+﻿C:\Users\jerem\Documents\VSProject\WebGpu\vsxmake2022\WebGpu\WebGpu.vcxproj(40,3): error MSB4019: The imported project "C:\Users\Jari\xmake\scripts\vsxmake\vsproj\Xmake.Defaults.props" was not found. Confirm that the expression in the Import declaration "C:\Users\Jari\xmake\scripts\vsxmake\vsproj\Xmake.Defaults.props" is correct, and that the file exists on disk.

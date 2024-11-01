@@ -174,6 +174,7 @@ int Application::launch() {
         if (!targetView) return 0;
 
 
+
         //Render Pass ?
         renderPassDesc = {};
         renderPassDesc.nextInChain = nullptr;
@@ -193,11 +194,6 @@ int Application::launch() {
         renderPassColorAttachment.loadOp = WGPULoadOp_Clear;
         renderPassColorAttachment.storeOp = WGPUStoreOp_Store;
         renderPassColorAttachment.clearValue = WGPUColor{ 0.9, 0.1, 0.2, 1.0 };
-#ifndef WEBGPU_BACKEND_WGPU
-        renderPassColorAttachment.depthSlice = WGPU_DEPTH_SLICE_UNDEFINED;
-#endif // NOT WEBGPU_BACKEND_WGPU
-
-
 
         renderPass = wgpuCommandEncoderBeginRenderPass(encoder, &renderPassDesc);
         // Use Render Pass
