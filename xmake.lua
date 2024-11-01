@@ -1,6 +1,7 @@
 add_rules("mode.debug", "mode.release")
 add_requires("glfw","wgpu-native","glfw3webgpu")
 
+
 target("WebGpu")
     set_kind("binary")
     add_files("src/*.cpp","glfw/*.cpp")
