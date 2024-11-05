@@ -23,14 +23,10 @@ public:
     
     // Return true as long as the main loop should keep on running
     bool IsRunning();
-    
-
-    int launch();
 
     WGPUTextureView GetNextSurfaceTextureView();
     WGPUAdapter requestAdapterSync(WGPUInstance instance, WGPURequestAdapterOptions const* options);
     WGPUDevice requestDeviceSync(WGPUAdapter adapter, WGPUDeviceDescriptor const* descriptor);
-    void inspectAdapter(WGPUAdapter adapter);
 
 public:
     // We put here all the variables that are shared between init and main loop
