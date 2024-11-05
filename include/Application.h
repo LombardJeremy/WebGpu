@@ -5,11 +5,12 @@
 #include <glfw3webgpu.h>
 #include <cassert>
 #include <vector>
+
 #define WEBGPU_BACKEND_WGPU
 
 class Application {
 public:
-    /*
+    
     // Initialize everything and return true if it went all right
     bool Initialize();
 
@@ -19,9 +20,10 @@ public:
     // Draw a frame and handle events
     void MainLoop();
 
+    
     // Return true as long as the main loop should keep on running
     bool IsRunning();
-    */
+    
 
     int launch();
 
@@ -32,25 +34,26 @@ public:
 
 public:
     // We put here all the variables that are shared between init and main loop
-    WGPUSurface surface;
     GLFWwindow* window;
-
-    WGPUInstance instance;
-    WGPUAdapter adapter;
+    WGPUSurface surface;
+    WGPUQueue queue;
 
     WGPUDeviceDescriptor deviceDesc;
     WGPUDevice device;
 
-    WGPUTextureView targetView;
-
     WGPUInstanceDescriptor desc;
+    WGPUInstance instance;
+
+    WGPUAdapter adapter;
+
+    WGPUTextureView targetView;
 
     WGPURenderPassEncoder renderPass;
     WGPURenderPassDescriptor renderPassDesc;
     WGPURenderPassColorAttachment renderPassColorAttachment;
 
-    WGPUCommandEncoder encoder;
     WGPUCommandEncoderDescriptor encoderDesc;
+    WGPUCommandEncoder encoder;
 
     WGPUCommandBufferDescriptor cmdBufferDescriptor;
     WGPUCommandBuffer command;

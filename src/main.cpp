@@ -8,13 +8,17 @@
 
 #define WEBGPU_BACKEND_WGPU
 
+/*
 int main(int argc, char** argv) {
+    
     Application app = Application();
     app.launch();
     std::string makanba;
     std::cin >> makanba;
+    
     return 0;
 }
+*/
 
 int Application::launch() {
 
@@ -211,8 +215,6 @@ int Application::launch() {
         wgpuSurfacePresent(surface);
     }
 
-    glfwDestroyWindow(window);
-    glfwTerminate();
 
     // We clean up the WebGPU instance
 
@@ -224,6 +226,8 @@ int Application::launch() {
     wgpuSurfaceRelease(surface);
     wgpuDeviceRelease(device);
     wgpuQueueRelease(queue);
+    glfwDestroyWindow(window);
+    glfwTerminate();
 
     return 0;
 }
@@ -275,6 +279,14 @@ WGPUAdapter Application::requestAdapterSync(WGPUInstance instance, WGPURequestAd
     return userData.adapter;
 }
 
+
+/**
+ * Utility function to get a WebGPU device, so that
+ *     WGPUAdapter device = requestDeviceSync(adapter, options);
+ * is roughly equivalent to
+ *     const device = await adapter.requestDevice(descriptor);
+ * It is very similar to requestAdapter
+ */
 void Application::inspectAdapter(WGPUAdapter adapter) {
 #ifndef __EMSCRIPTEN__
     WGPUSupportedLimits supportedLimits = {};
@@ -337,14 +349,6 @@ void Application::inspectAdapter(WGPUAdapter adapter) {
     std::cout << " - backendType: 0x" << properties.backendType << std::endl;
     std::cout << std::dec; // Restore decimal numbers
 }
-
-/**
- * Utility function to get a WebGPU device, so that
- *     WGPUAdapter device = requestDeviceSync(adapter, options);
- * is roughly equivalent to
- *     const device = await adapter.requestDevice(descriptor);
- * It is very similar to requestAdapter
- */
 WGPUDevice Application::requestDeviceSync(WGPUAdapter adapter, WGPUDeviceDescriptor const* descriptor) {
     struct UserData {
         WGPUDevice device = nullptr;

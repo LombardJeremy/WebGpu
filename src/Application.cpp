@@ -1,4 +1,4 @@
-//#include "Header/Application.h"
+#include "../include/Application.h"
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include <webgpu/webgpu.h>
@@ -96,9 +96,10 @@ WGPUDevice requestDeviceSync(WGPUAdapter adapter, WGPUDeviceDescriptor const* de
     return userData.device;
 }
 
-/*
+
 bool Application::Initialize()
 {
+
 	// Open window
 	glfwInit();
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // <-- extra info for glfwCreateWindow
@@ -110,12 +111,11 @@ bool Application::Initialize()
 
 	// Get adapter
 	std::cout << "Requesting adapter..." << std::endl;
-	surface = glfwGetWGPUSurface(instance, window);
+	surface = glfwGetWGPUSurface(instance, window); //Get Surface
 	WGPURequestAdapterOptions adapterOpts = {};
 	adapterOpts.nextInChain = nullptr;
 	adapterOpts.compatibleSurface = surface;
-	//                              ^^^^^^^ Use the surface here
-
+	                             
 	adapter = requestAdapterSync(instance, &adapterOpts);
 	std::cout << "Got adapter: " << adapter << std::endl;
 
@@ -127,29 +127,86 @@ bool Application::Initialize()
 	std::cout << "Requesting device..." << std::endl;
 	deviceDesc = {};
 	deviceDesc.nextInChain = nullptr;
-	//{ { Build device descriptor } }
+    deviceDesc.label = "My Device"; // anything works here, that's your call
+    deviceDesc.requiredFeatureCount = 0; // we do not require any specific feature
+    deviceDesc.requiredLimits = nullptr; // we do not require any specific limit
+    deviceDesc.defaultQueue.nextInChain = nullptr;
+    deviceDesc.defaultQueue.label = "The default queue";
+    // A function that is invoked whenever the device stops being available.
+    deviceDesc.deviceLostCallback = [](WGPUDeviceLostReason reason, char const* message, void* /* pUserData */) {
+        std::cout << "Device lost: reason " << reason;
+        if (message) std::cout << " (" << message << ")";
+        std::cout << std::endl;
+        };
 	device = requestDeviceSync(adapter, &deviceDesc);
 	std::cout << "Got device: " << device << std::endl;
 
+    // Device error callback
+    auto onDeviceError = [](WGPUErrorType type, char const* message, void* /* pUserData */) {
+        std::cout << "Uncaptured device error: type " << type;
+        if (message) std::cout << " (" << message << ")";
+        std::cout << std::endl;
+        };
+    wgpuDeviceSetUncapturedErrorCallback(device, onDeviceError, nullptr /* pUserData */);
+
+    queue = wgpuDeviceGetQueue(device);
+
+    //SURFACE CONFIGURATION
+    WGPUSurfaceConfiguration config = {};
+    config.nextInChain = nullptr;
+    // Configuration of the textures created for the underlying swap chain
+    config.width = 640;
+    config.height = 480;
+    config.usage = WGPUTextureUsage_RenderAttachment;
+    WGPUTextureFormat surfaceFormat = wgpuSurfaceGetPreferredFormat(surface, adapter);
+    config.format = surfaceFormat;
+    // And we do not need any particular view format:
+    config.viewFormatCount = 0;
+    config.viewFormats = nullptr;
+    config.device = device;
+    config.presentMode = WGPUPresentMode_Fifo;
+    config.alphaMode = WGPUCompositeAlphaMode_Auto;
+    wgpuSurfaceConfigure(surface, &config);
+
+    wgpuAdapterRelease(adapter);
 
 	return true;
 }
-
 void Application::Terminate()
 {
+    wgpuQueueRelease(queue);
+    wgpuSurfaceRelease(surface);
+    wgpuDeviceRelease(device);
+    glfwDestroyWindow(window);
+    glfwTerminate();
 }
+
 
 void Application::MainLoop()
 {
-#if defined(WEBGPU_BACKEND_DAWN)
-	wgpuDeviceTick(device);
-#elif defined(WEBGPU_BACKEND_WGPU)
-	wgpuDevicePoll(device, false, nullptr);
-#endif
+    glfwPollEvents();
+
 }
 
 bool Application::IsRunning()
 {
-	return false;
+    return !glfwWindowShouldClose(window);
 }
-*/
+
+
+int main() {
+    Application app;
+
+    if (!app.Initialize()) {
+        return 1;
+    }
+
+    // Warning: this is still not Emscripten-friendly, see below
+    while (app.IsRunning()) {
+        app.MainLoop();
+    }
+
+    app.Terminate();
+
+    return 0;
+}
