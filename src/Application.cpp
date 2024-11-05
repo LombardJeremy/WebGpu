@@ -119,9 +119,6 @@ WGPUTextureView Application::GetNextSurfaceTextureView() {
     viewDescriptor.aspect = WGPUTextureAspect_All;
     WGPUTextureView targetView = wgpuTextureCreateView(surfaceTexture.texture, &viewDescriptor);
 
-    // At the end of the frame
-    wgpuTextureViewRelease(targetView);
-
     return targetView;
 }
 
@@ -201,7 +198,6 @@ bool Application::Initialize()
 
     // Finally submit the command queue
     std::cout << "Submitting command..." << std::endl;
-    wgpuQueueSubmit(queue, 1, &command);
     wgpuCommandBufferRelease(command);
     std::cout << "Command submitted." << std::endl;
 
@@ -245,6 +241,7 @@ bool Application::Initialize()
 void Application::Terminate()
 {
     wgpuQueueRelease(queue);
+    wgpuTextureViewRelease(targetView);
     wgpuRenderPassEncoderRelease(renderPass);
     wgpuSurfaceRelease(surface);
     wgpuDeviceRelease(device);
@@ -293,6 +290,10 @@ void Application::MainLoop()
 
     wgpuRenderPassEncoderEnd(renderPass);
     //wgpuRenderPassEncoderRelease(renderPass); old one
+
+    command = wgpuCommandEncoderFinish(encoder, &cmdBufferDescriptor);
+
+    wgpuQueueSubmit(queue, 1, &command);
 
 
     wgpuSurfacePresent(surface);
