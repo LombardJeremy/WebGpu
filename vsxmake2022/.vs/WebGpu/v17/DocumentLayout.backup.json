@@ -28,8 +28,7 @@
               "RelativeToolTip": "..\\include\\Application.h",
               "ViewState": "AgIAAB8AAAAAAAAAAAAnwDUAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-11-01T20:49:50.86Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-01T20:49:50.86Z"
             },
             {
               "$type": "Document",
@@ -39,7 +38,7 @@
               "RelativeDocumentMoniker": "..\\src\\Application.cpp",
               "ToolTip": "C:\\Users\\jerem\\Documents\\VSProject\\WebGpu\\src\\Application.cpp",
               "RelativeToolTip": "..\\src\\Application.cpp",
-              "ViewState": "AgIAAAUBAAAAAAAAAAAAACUBAABEAAAAAAAAAA==",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAQwPMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-11-01T20:49:50.876Z",
               "EditorCaption": ""

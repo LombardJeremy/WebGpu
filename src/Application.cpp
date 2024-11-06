@@ -241,8 +241,6 @@ bool Application::Initialize()
 void Application::Terminate()
 {
     wgpuQueueRelease(queue);
-    wgpuTextureViewRelease(targetView);
-    wgpuRenderPassEncoderRelease(renderPass);
     wgpuSurfaceRelease(surface);
     wgpuDeviceRelease(device);
     glfwDestroyWindow(window);
@@ -297,6 +295,8 @@ void Application::MainLoop()
 
 
     wgpuSurfacePresent(surface);
+
+    wgpuTextureViewRelease(targetView);
 
 }
 
